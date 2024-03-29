@@ -1,7 +1,7 @@
 import { HydratedDocument } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export type ResourceDocument = HydratedDocument<Song>;
+export type SongDocument = HydratedDocument<Song>;
 
 @Schema()
 export class Song {

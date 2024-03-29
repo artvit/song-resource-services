@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SongDto } from './dto/song.dto';
+import { mapSongToDto, SongDto } from './dto/song.dto';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Song } from './entities/song.entity';
@@ -15,16 +15,12 @@ export class SongService {
 
   async findOne(id: string): Promise<SongDto> {
     const foundSong = await this.songModel.findOne({ _id: id });
-    return (
-      foundSong && {
-        name: foundSong.name,
-        artist: foundSong.artist,
-        album: foundSong.album,
-        year: foundSong.year,
-        length: foundSong.length,
-        resourceId: foundSong.resourceId,
-      }
-    );
+    return foundSong && mapSongToDto(foundSong);
+  }
+
+  async findAll(): Promise<SongDto[]> {
+    const found = await this.songModel.find();
+    return found.map(mapSongToDto);
   }
 
   async remove(ids: string[]) {
