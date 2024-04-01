@@ -1,11 +1,24 @@
-import { Song, SongDocument } from '../entities/song.entity';
+import { SongDocument } from '../entities/song.entity';
+import { IsNotEmpty, IsOptional, IsPositive } from 'class-validator';
 
 export class SongDto {
+  @IsNotEmpty()
   name: string;
+
+  @IsOptional()
   artist: string;
+
+  @IsOptional()
   album: string;
+
+  @IsPositive()
   length: number;
+
+  @IsOptional()
+  @IsPositive()
   year: number;
+
+  @IsNotEmpty()
   resourceId: string;
 }
 

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Delete,
   Get,
@@ -19,14 +20,12 @@ import { Request, Response } from 'express';
 export class ResourceController {
   constructor(private readonly resourceService: ResourceService) {}
 
-  @Get()
-  getHello(): object {
-    return { message: 'Hello World!' };
-  }
-
   @Post()
   postSongResource(@Req() req: RawBodyRequest<Request>) {
     const rawBody = req.rawBody;
+    if (!rawBody) {
+      throw new BadRequestException('Content type should be audio/mpeg');
+    }
     return this.resourceService.uploadResource(rawBody);
   }
 
